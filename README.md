@@ -1,3 +1,11 @@
+# README
+## www.jmbfountain.de Website
+
+This website is based on Minima & jekyll
+
+
+
+
 # minima
 
 *Minima is a one-size-fits-all Jekyll theme for writers*. It's Jekyll's default (and first) theme. It's what you get when you run `jekyll new`.
