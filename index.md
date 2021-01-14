@@ -1,10 +1,9 @@
 ---
-# Front matter for Jekyll
-layout: default
-my_number: 5
-title: Home
+#
+# By default, content added below the "---" mark will appear in the home page
+# between the top bar and the list of recent posts.
+# To change the home page layout, edit the _layouts/home.html file.
+# See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+#
+layout: home
 ---
-
-## Home
-
-Welcome to my website. Here you'll find some of the stuff I'm working on.
