@@ -1,9 +1,10 @@
 FROM nginx:latest
 RUN apt-get update
-RUN apt-get install ruby-full build-essential -y
+RUN apt-get install ruby-full build-essential git -y
 RUN gem install jekyll bundler
 COPY src /src
 WORKDIR /src/
+RUN git init
 RUN jekyll clean
 RUN jekyll build
 RUN cp -r /src/_site/ /usr/share/nginx/html/

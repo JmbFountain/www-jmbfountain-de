@@ -1,0 +1,26 @@
+I"�
+<p>So I recently started learning Kubernetes stuff, for various reasons.</p>
+<ul>
+  <li>Game server deployment</li>
+  <li>Learning new stuff</li>
+  <li>It should be fun? Maybe? Hopefully?</li>
+</ul>
+
+<p>I decided to name my project after a supercomputer in the German Science-Fiction Series Perry Rhodan, “NATHAN”, situated on the Moon. It provides compute power to many projects, like traffic control, weather control, or science. Especially in the first two cases, it is supported not just by the large “Datacenters” spanning large parts of the moon, but also has many smaller nodes spread across the solar system. I hope you can see the parallels to the way Kubernetes works, balancing workloads across both large compute units and small edge nodes.</p>
+
+<h2 id="current-state">Current state</h2>
+<p>I guess my current situation is fairly luxurious from the point of view of many other people. My main server is running Proxmox (currently v6.7) with a customized Debian 10 container template (at the time of writing this blogpost, Debian 11 has just released), which are, after being deployed, are managed by Ansible and monitored by Prometheus+Grafana.
+Now, you might ask, why change this? For me, the most annoying part is that I have to deploy the LXC, then log into it, start the SSH server, wait for it to start (Low entropy means it needs forever to start), while doing so add the new host to my ansible Inventory and prometheus. Then I can proceed to install and configure the game server, e.g. Minecraft. My first Idea was to just install Docker on a container and just run all the game Servers on different ports, but that would become annoying when spinning up the 3rd minecraft server for a LAN party, forcing me to relocate it to a non-standard port.</p>
+
+<h2 id="plan-as-it-stands-subject-to-change">Plan as it stands (Subject to change)</h2>
+<p>Basically, I wanted a simple K3s setup that I can just spin up or down services on with minimal setup. Minecraft-Server with crossplay between Java and Bedrock Versions? Run a simple command. Because of the weird oddities my setup entails, I landed on the following:</p>
+<ul>
+  <li>K3s: Lightweight, does all I want it to do, doesn’t waste my resources (this is all paid out of my personal pocket, remember!)</li>
+  <li>Metallb: Finally a way to expose Services on their individual IP addresses! (I’ll figure out a way to set the DNS records later)</li>
+  <li>Longhorn: Honestly, no Idea. I just didn’t want to have to handle an redundant NFS server, so I’ll try this.</li>
+</ul>
+
+<p>My progress can be tracked on Github:
+<a href="https://github.com/JmbFountain/k3s-setup">https://github.com/JmbFountain/k3s-setup</a>
+Feel Free to open issues, send pull requests or E-Mails with suggestions for Improvements!</p>
+:ET

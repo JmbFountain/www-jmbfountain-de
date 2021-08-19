@@ -1,11 +1,11 @@
 title: JmbFountain
 author:
   name: Johannes
-  email: johannes@jmbfountain.de
+  email: jmb@smx.de
 description: > # this means to ignore newlines until "show_excerpts:"
   Website of Johannes, here I write about all sorts of stuff I usually do, along with random other stuff
 
-show_excerpts: false # set to true to show excerpts on the homepage
+show_excerpts: true # set to true to show excerpts on the homepage
 
 # Minima date format
 # refer to https://shopify.github.io/liquid/filters/date/ if you want to customize this
