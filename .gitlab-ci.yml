@@ -6,11 +6,12 @@ jekyll-build:
     stage: compile
     image: jekyll/builder
     script:
+        - cd src/
         - jekyll clean
         - jekyll build
     artifacts:
         paths: 
-            - _site/
+            - src/_site/
         name: "webroot"
 
 container-build:
