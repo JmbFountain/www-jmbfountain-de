@@ -1,4 +1,3 @@
-
 stages:
     - compile
     - container-build
@@ -17,6 +16,8 @@ jekyll-build:
 container-build:
     stage: container-build
     image: docker:latest
+    dependencies:
+        - jekyll-build
     script:
         - docker login -u cicd-container -p chrHyQZ_gesKrFMJZZB9 gitlab.vj.home:5050
         - docker build -t "gitlab.vj.home:5050/johannes/www-jmbfountain-de:${CI_BUILD_REF}" .
