@@ -16,7 +16,7 @@ jekyll-build:
 
 container-build:
     stage: container-build
-    image: docker:latest
+    image: docker
     dependencies:
         - jekyll-build
     script:
