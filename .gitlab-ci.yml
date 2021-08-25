@@ -4,7 +4,7 @@ stages:
 
 jekyll-build:
     stage: compile
-    image: jekyll:build
+    image: jekyll/builder
     script:
         - jekyll clean
         - jekyll build
