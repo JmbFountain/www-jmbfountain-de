@@ -3,18 +3,19 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>JmbFountain | Website of Johannes, here I write about all sorts of stuff I usually do, along with random other stuff</title>
+<title>Setting up Gitlab CI/CD pt. 2 | JmbFountain</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="JmbFountain" />
-<meta name="author" content="Johannes" />
+<meta property="og:title" content="Setting up Gitlab CI/CD pt. 2" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Website of Johannes, here I write about all sorts of stuff I usually do, along with random other stuff" />
-<meta property="og:description" content="Website of Johannes, here I write about all sorts of stuff I usually do, along with random other stuff" />
+<meta name="description" content="In the last post, I left off with a half finished pipeline. Now, I finally got it working." />
+<meta property="og:description" content="In the last post, I left off with a half finished pipeline. Now, I finally got it working." />
 <meta property="og:site_name" content="JmbFountain" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-08-26T00:00:00+02:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="JmbFountain" />
+<meta property="twitter:title" content="Setting up Gitlab CI/CD pt. 2" />
 <script type="application/ld+json">
-{"description":"Website of Johannes, here I write about all sorts of stuff I usually do, along with random other stuff","headline":"JmbFountain","@type":"WebSite","author":{"@type":"Person","name":"Johannes"},"url":"/","name":"JmbFountain","@context":"https://schema.org"}</script>
+{"description":"In the last post, I left off with a half finished pipeline. Now, I finally got it working.","dateModified":"2021-08-26T00:00:00+02:00","datePublished":"2021-08-26T00:00:00+02:00","headline":"Setting up Gitlab CI/CD pt. 2","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2021/08/26/18-03.html"},"@type":"BlogPosting","url":"/blog/2021/08/26/18-03.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="JmbFountain" />
 </head>
@@ -35,46 +36,60 @@
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <div class="home"><h2 id="welcome-to-my-homepage-here-youll-find-my-projects-and-other-stuff">Welcome to my homepage, here you’ll find my projects and other stuff</h2>
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Setting up Gitlab CI/CD pt. 2</h1>
+    <p class="post-meta"><time class="dt-published" datetime="2021-08-26T00:00:00+02:00" itemprop="datePublished">
+        2021-08-26-00-00
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Johannes</span></span></p>
+  </header>
 
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>In the last post, I left off with a half finished pipeline. Now, I finally got it working.</p>
 
-  <ul class="post-list"><li>
-        <span class="post-meta">2021-08-26-00-00</span>
-        <h3>
-          <a class="post-link" href="/blog/2021/08/26/gitlab-cicd-1.html">
-            Setting up Gitlab CICD pt. 1
-          </a>
-        </h3><p>My next step of optimizing my homelab (I am lazy, after all) was in building a functional ci/cd environment. Foolish as I am, I decided to start with my website.</p>
-</li><li>
-        <span class="post-meta">2021-08-26-00-00</span>
-        <h3>
-          <a class="post-link" href="/blog/2021/08/26/18-03.html">
-            Setting up Gitlab CI/CD pt. 2
-          </a>
-        </h3><p>In the last post, I left off with a half finished pipeline. Now, I finally got it working.</p>
-</li><li>
-        <span class="post-meta">2021-08-19-00-00</span>
-        <h3>
-          <a class="post-link" href="/blog/2021/08/19/k3s-configs.html">
-            K3s custom installation
-          </a>
-        </h3><p>So I recently started learning Kubernetes stuff, for various reasons.</p>
-<ul>
-  <li>Game server deployment</li>
-  <li>Learning new stuff</li>
-  <li>It should be fun? Maybe? Hopefully?</li>
-</ul>
-</li><li>
-        <span class="post-meta">2016-05-20-00-00</span>
-        <h3>
-          <a class="post-link" href="/junk/2016/05/20/this-post-demonstrates-post-content-styles.html">
-            This post demonstrates post content styles
-          </a>
-        </h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt. Vestibulum lacus tortor, ultricies id dignissim ac, bibendum in velit.</p>
-</li></ul>
+<p>```yaml .gitlab-ci.yml
+stages:
+    - compile
+    - container-build</p>
 
-    </div>
+<p>jekyll-build:
+    stage: compile
+    image: jekyll/builder
+    tags:
+        - docker
+    script:
+        - cd src/
+        - jekyll clean
+        - jekyll build
+    artifacts:
+        paths: 
+            - src/_site/
+        name: “webroot”</p>
+
+<p>container-build:
+    stage: container-build
+    tags:
+        - docker-builder
+    dependencies:
+        - jekyll-build
+    before_script:
+        - unset cd
+        - docker info
+        - echo “$CI_DEPLOY_USER $CI_DEPLOY_PASSWORD $CI_REGISTRY”
+        - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
+    script:
+        - docker build -t $CI_REGISTRY/johannes/www-jmbfountain-de .
+        - docker push $CI_REGISTRY/johannes/www-jmbfountain-de</p>
+
+<p>```</p>
+
+<p>So what did I do to fix this? Basically I read through the docs for login/auth for three hours and then figured out I should use a Deployment-Token called “gitlab-deploy-token”, and login using <code class="language-plaintext highlighter-rouge">docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY</code>. Now, it’s time to do the cd part of CI/CD, deploying the website to Kubernetes. However, to get that part done properly, I’ll have to first get my new network running, so there will be no more stuff like this for a while.</p>
+
+  </div><a class="u-url" href="/blog/2021/08/26/18-03.html" hidden></a>
+</article>
 
       </div>
     </main><footer class="site-footer h-card">
