@@ -17,10 +17,16 @@ jekyll-build:
 container-build:
     stage: container-build
     image: docker
+    variables:
+        DOCKER_TLS_CERTDIR: "/certs"
+    services: 
+        - docker:dind
     dependencies:
         - jekyll-build
-    script:
+    before_script:
+        - docker info
         - docker login -u cicd-container -p chrHyQZ_gesKrFMJZZB9 gitlab.vj.home:5050
+    script:
         - docker build -t "gitlab.vj.home:5050/johannes/www-jmbfountain-de:${CI_BUILD_REF}" .
         - docker tag gitlab.vj.home:5050/johannes/www-jmbfountain-de:${CI_BUILD_REF} "gitlab.vj.home:5050/johannes/www-jmbfountain-de:latest"
         - docker push gitlab.vj.home:5050/johannes/www-jmbfountain-de:${CI_BUILD_REF}
