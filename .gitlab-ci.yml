@@ -25,7 +25,7 @@ container-build:
     before_script:
         - unset cd
         - docker info
-        - docker login -u cicd-container -p chrHyQZ_gesKrFMJZZB9 gitlab.vj.home:5050
+        - echo "$CI_DEPLOY_USER"
     script:
         - docker build -t gitlab.vj.home:5050/johannes/www-jmbfountain-de .
         - docker push gitlab.vj.home:5050/johannes/www-jmbfountain-de
