@@ -1,0 +1,32 @@
+stages:
+    - compile
+    - container-build
+
+jekyll-build:
+    stage: compile
+    image: jekyll/builder
+    tags:
+        - docker
+    script:
+        - cd src/
+        - jekyll clean
+        - jekyll build
+    artifacts:
+        paths: 
+            - src/_site/
+        name: "webroot"
+
+container-build:
+    stage: container-build
+    tags:
+        - docker-builder
+    dependencies:
+        - jekyll-build
+    before_script:
+        - unset cd
+        - docker info
+        - echo "$CI_DEPLOY_USER $CI_DEPLOY_PASSWORD $CI_REGISTRY"
+        - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
+    script:
+        - docker build -t $CI_REGISTRY/johannes/www-jmbfountain-de .
+        - docker push $CI_REGISTRY/johannes/www-jmbfountain-de
