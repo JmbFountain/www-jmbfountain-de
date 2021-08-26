@@ -27,7 +27,5 @@ container-build:
         - docker info
         - docker login -u cicd-container -p chrHyQZ_gesKrFMJZZB9 gitlab.vj.home:5050
     script:
-        - docker build -t "gitlab.vj.home:5050/johannes/www-jmbfountain-de:${CI_BUILD_REF}" .
-        - docker tag gitlab.vj.home:5050/johannes/www-jmbfountain-de:${CI_BUILD_REF} "gitlab.vj.home:5050/johannes/www-jmbfountain-de:latest"
-        - docker push gitlab.vj.home:5050/johannes/www-jmbfountain-de:${CI_BUILD_REF}
-        - docker push gitlab.vj.home:5050/johannes/www-jmbfountain-de:latest
+        - docker build -t gitlab.vj.home:5050/johannes/www-jmbfountain-de .
+        - docker push gitlab.vj.home:5050/johannes/www-jmbfountain-de
