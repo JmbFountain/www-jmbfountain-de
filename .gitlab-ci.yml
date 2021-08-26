@@ -28,5 +28,5 @@ container-build:
         - echo "$CI_DEPLOY_USER $CI_DEPLOY_PASSWORD $CI_REGISTRY"
         - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
     script:
-        - docker build -t gitlab.vj.home:5050/johannes/www-jmbfountain-de .
-        - docker push gitlab.vj.home:5050/johannes/www-jmbfountain-de
+        - docker build -t $CI_REGISTRY/johannes/www-jmbfountain-de .
+        - docker push $CI_REGISTRY/johannes/www-jmbfountain-de
