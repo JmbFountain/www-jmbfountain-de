@@ -5,6 +5,8 @@ stages:
 jekyll-build:
     stage: compile
     image: jekyll/builder
+    tags:
+        - docker
     script:
         - cd src/
         - jekyll clean
@@ -16,11 +18,8 @@ jekyll-build:
 
 container-build:
     stage: container-build
-    image: docker
-    variables:
-        DOCKER_TLS_CERTDIR: "/certs"
-    services: 
-        - docker:dind
+    tags:
+        - docker-builder
     dependencies:
         - jekyll-build
     before_script:
