@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Setting up Gitlab CICD pt. 1"
+title: "Setting up Gitlab CI/CD pt. 1"
 categories: blog
 author:
 - Johannes

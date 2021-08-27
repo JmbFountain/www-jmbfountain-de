@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Setting up Gitlab CI/CD pt. 2" />
 <script type="application/ld+json">
-{"description":"In the last post, I left off with a half finished pipeline. Now, I finally got it working.","dateModified":"2021-08-26T00:00:00+02:00","datePublished":"2021-08-26T00:00:00+02:00","headline":"Setting up Gitlab CI/CD pt. 2","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2021/08/26/18-03.html"},"@type":"BlogPosting","url":"/blog/2021/08/26/18-03.html","@context":"https://schema.org"}</script>
+{"description":"In the last post, I left off with a half finished pipeline. Now, I finally got it working.","@type":"BlogPosting","headline":"Setting up Gitlab CI/CD pt. 2","dateModified":"2021-08-26T00:00:00+02:00","datePublished":"2021-08-26T00:00:00+02:00","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2021/08/26/18-03.html"},"url":"/blog/2021/08/26/18-03.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="JmbFountain" />
 </head>
@@ -50,41 +50,41 @@
   <div class="post-content e-content" itemprop="articleBody">
     <p>In the last post, I left off with a half finished pipeline. Now, I finally got it working.</p>
 
-<p>```yaml .gitlab-ci.yml
-stages:
-    - compile
-    - container-build</p>
+<p>.gitlab-ci.yml:</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">stages</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">compile</span>
+    <span class="pi">-</span> <span class="s">container-build</span>
 
-<p>jekyll-build:
-    stage: compile
-    image: jekyll/builder
-    tags:
-        - docker
-    script:
-        - cd src/
-        - jekyll clean
-        - jekyll build
-    artifacts:
-        paths: 
-            - src/_site/
-        name: “webroot”</p>
+<span class="na">jekyll-build</span><span class="pi">:</span>
+    <span class="na">stage</span><span class="pi">:</span> <span class="s">compile</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">jekyll/builder</span>
+    <span class="na">tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">docker</span>
+    <span class="na">script</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">cd src/</span>
+        <span class="pi">-</span> <span class="s">jekyll clean</span>
+        <span class="pi">-</span> <span class="s">jekyll build</span>
+    <span class="na">artifacts</span><span class="pi">:</span>
+        <span class="na">paths</span><span class="pi">:</span> 
+            <span class="pi">-</span> <span class="s">src/_site/</span>
+        <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">webroot"</span>
 
-<p>container-build:
-    stage: container-build
-    tags:
-        - docker-builder
-    dependencies:
-        - jekyll-build
-    before_script:
-        - unset cd
-        - docker info
-        - echo “$CI_DEPLOY_USER $CI_DEPLOY_PASSWORD $CI_REGISTRY”
-        - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
-    script:
-        - docker build -t $CI_REGISTRY/johannes/www-jmbfountain-de .
-        - docker push $CI_REGISTRY/johannes/www-jmbfountain-de</p>
+<span class="na">container-build</span><span class="pi">:</span>
+    <span class="na">stage</span><span class="pi">:</span> <span class="s">container-build</span>
+    <span class="na">tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">docker-builder</span>
+    <span class="na">dependencies</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">jekyll-build</span>
+    <span class="na">before_script</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">unset cd</span>
+        <span class="pi">-</span> <span class="s">docker info</span>
+        <span class="pi">-</span> <span class="s">echo "$CI_DEPLOY_USER $CI_DEPLOY_PASSWORD $CI_REGISTRY"</span>
+        <span class="pi">-</span> <span class="s">docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY</span>
+    <span class="na">script</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">docker build -t $CI_REGISTRY/johannes/www-jmbfountain-de .</span>
+        <span class="pi">-</span> <span class="s">docker push $CI_REGISTRY/johannes/www-jmbfountain-de</span>
 
-<p>```</p>
+</code></pre></div></div>
 
 <p>So what did I do to fix this? Basically I read through the docs for login/auth for three hours and then figured out I should use a Deployment-Token called “gitlab-deploy-token”, and login using <code class="language-plaintext highlighter-rouge">docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY</code>. Now, it’s time to do the cd part of CI/CD, deploying the website to Kubernetes. However, to get that part done properly, I’ll have to first get my new network running, so there will be no more stuff like this for a while.</p>
 
