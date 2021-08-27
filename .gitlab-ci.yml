@@ -1,10 +1,9 @@
 stages:
-    - compile
-    - container-build
-    - deploy
+    - one
+    - two
 
 jekyll-build:
-    stage: compile
+    stage: one
     image: jekyll/builder
     tags:
         - docker
@@ -18,10 +17,12 @@ jekyll-build:
         name: "webroot"
 
 container-build:
-    stage: container-build
+    stage: two
     tags:
         - docker-builder
     dependencies:
+        - jekyll-build
+    needs:
         - jekyll-build
     before_script:
         - unset cd
@@ -33,7 +34,7 @@ container-build:
         - docker push $CI_REGISTRY/johannes/www-jmbfountain-de
 
 deploy-lxc:
-    stage: deploy
+    stage: two
     tags:
         - docker-builder
     dependencies:
