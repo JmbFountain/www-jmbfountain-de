@@ -37,6 +37,6 @@ deploy-lxc:
     tags:
         - docker-builder
     dependencies:
-        jekyll-build
+        - jekyll-build
     script:
         - scp -r src/_site/* root@jmb-web-01:/var/www/html/
