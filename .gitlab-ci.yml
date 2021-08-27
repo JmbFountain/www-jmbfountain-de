@@ -1,6 +1,7 @@
 stages:
     - compile
     - container-build
+    - deploy
 
 jekyll-build:
     stage: compile
@@ -30,3 +31,12 @@ container-build:
     script:
         - docker build -t $CI_REGISTRY/johannes/www-jmbfountain-de .
         - docker push $CI_REGISTRY/johannes/www-jmbfountain-de
+
+deploy-lxc:
+    stage: deploy
+    tags:
+        - docker-builder
+    dependencies:
+        jekyll-build
+    script:
+        - scp -r src/_site/* root@jmb-web-01:/var/www/html/
