@@ -3,19 +3,19 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>Setting up Gitlab CI/CD pt. 1 | JmbFountain</title>
+<title>Setting up Gitlab CI/CD | JmbFountain</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="Setting up Gitlab CI/CD pt. 1" />
+<meta property="og:title" content="Setting up Gitlab CI/CD" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="My next step of optimizing my homelab (I am lazy, after all) was in building a functional ci/cd environment. Foolish as I am, I decided to start with my website." />
 <meta property="og:description" content="My next step of optimizing my homelab (I am lazy, after all) was in building a functional ci/cd environment. Foolish as I am, I decided to start with my website." />
 <meta property="og:site_name" content="JmbFountain" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2021-08-26T00:00:00+02:00" />
+<meta property="article:published_time" content="2021-08-27T00:00:00+02:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Setting up Gitlab CI/CD pt. 1" />
+<meta property="twitter:title" content="Setting up Gitlab CI/CD" />
 <script type="application/ld+json">
-{"description":"My next step of optimizing my homelab (I am lazy, after all) was in building a functional ci/cd environment. Foolish as I am, I decided to start with my website.","@type":"BlogPosting","headline":"Setting up Gitlab CI/CD pt. 1","dateModified":"2021-08-26T00:00:00+02:00","datePublished":"2021-08-26T00:00:00+02:00","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2021/08/26/gitlab-cicd-1.html"},"url":"/blog/2021/08/26/gitlab-cicd-1.html","@context":"https://schema.org"}</script>
+{"description":"My next step of optimizing my homelab (I am lazy, after all) was in building a functional ci/cd environment. Foolish as I am, I decided to start with my website.","@type":"BlogPosting","headline":"Setting up Gitlab CI/CD","dateModified":"2021-08-27T00:00:00+02:00","datePublished":"2021-08-27T00:00:00+02:00","url":"/blog/2021/08/27/gitlab-cicd-1.html","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2021/08/27/gitlab-cicd-1.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="JmbFountain" />
 </head>
@@ -39,9 +39,9 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Setting up Gitlab CI/CD pt. 1</h1>
-    <p class="post-meta"><time class="dt-published" datetime="2021-08-26T00:00:00+02:00" itemprop="datePublished">
-        2021-08-26-00-00
+    <h1 class="post-title p-name" itemprop="name headline">Setting up Gitlab CI/CD</h1>
+    <p class="post-meta"><time class="dt-published" datetime="2021-08-27T00:00:00+02:00" itemprop="datePublished">
+        2021-08-27-00-00
       </time>• 
           <span itemprop="author" itemscope itemtype="http://schema.org/Person">
             <span class="p-author h-card" itemprop="name">Johannes</span></span></p>
@@ -51,6 +51,8 @@
     <p>My next step of optimizing my homelab (I am lazy, after all) was in building a functional ci/cd environment. Foolish as I am, I decided to start with my website.</p>
 
 <p>My current Website is statically generated using Jekyll. As a Theme I just stuck with Minima after doing a few modifications, namely reducing the content padding on the sides (I really dislike the huge white bars of nothing, my guess is they developed after people saw 16:9 screens and thought “look, how many more ads we can put on this”).</p>
+
+<h2 id="part-1-getting-started"><strong>Part 1: Getting started</strong></h2>
 
 <h2 id="first-experiments">First experiments</h2>
 <p>So, foolishly, I decided to use it as an apparently easy first start. My goal was to get a container out of it that I could just deploy to k3s.For me, the logical steps would be the following:</p>
@@ -100,7 +102,7 @@ Fixed it, and:</p>
 <h2 id="changing-tactic">Changing tactic</h2>
 <p>I decided that to best circumvent this docker-in-docker thing I’d just register another runner on the same container that uses shell as an executor, which would then just execute a <code class="language-plaintext highlighter-rouge">docker build</code>-command. This somehow gives me an even less useful error (“ERROR: Job failed: exit status 1”)</p>
 
-<p>At the end of this first part, my .gitlab-ci.yml looks like this:</p>
+<p>At the end of this stage, my .gitlab-ci.yml looks like this:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">stages</span><span class="pi">:</span>
     <span class="pi">-</span> <span class="s">compile</span>
@@ -138,7 +140,65 @@ Fixed it, and:</p>
 </code></pre></div></div>
 <p><em>(The token is hard-coded in this iteration, after I get it working I can still delete it, and replace it with a safer alternative)</em></p>
 
-  </div><a class="u-url" href="/blog/2021/08/26/gitlab-cicd-1.html" hidden></a>
+<h2 id="part-2-working-ci"><strong>Part 2: Working CI</strong></h2>
+<p><em>(this was originally a second post, but I decided to merge it for readability)</em></p>
+
+<p>.gitlab-ci.yml:</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">stages</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">compile</span>
+    <span class="pi">-</span> <span class="s">container-build</span>
+
+<span class="na">jekyll-build</span><span class="pi">:</span>
+    <span class="na">stage</span><span class="pi">:</span> <span class="s">compile</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">jekyll/builder</span>
+    <span class="na">tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">docker</span>
+    <span class="na">script</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">cd src/</span>
+        <span class="pi">-</span> <span class="s">jekyll clean</span>
+        <span class="pi">-</span> <span class="s">jekyll build</span>
+    <span class="na">artifacts</span><span class="pi">:</span>
+        <span class="na">paths</span><span class="pi">:</span> 
+            <span class="pi">-</span> <span class="s">src/_site/</span>
+        <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">webroot"</span>
+
+<span class="na">container-build</span><span class="pi">:</span>
+    <span class="na">stage</span><span class="pi">:</span> <span class="s">container-build</span>
+    <span class="na">tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">docker-builder</span>
+    <span class="na">dependencies</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">jekyll-build</span>
+    <span class="na">before_script</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">unset cd</span>
+        <span class="pi">-</span> <span class="s">docker info</span>
+        <span class="pi">-</span> <span class="s">echo "$CI_DEPLOY_USER $CI_DEPLOY_PASSWORD $CI_REGISTRY"</span>
+        <span class="pi">-</span> <span class="s">docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY</span>
+    <span class="na">script</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">docker build -t $CI_REGISTRY/johannes/www-jmbfountain-de .</span>
+        <span class="pi">-</span> <span class="s">docker push $CI_REGISTRY/johannes/www-jmbfountain-de</span>
+
+</code></pre></div></div>
+
+<p>So what did I do to fix this? Basically I read through the docs for login/auth for three hours and then figured out I should use a Deployment-Token called “gitlab-deploy-token”, and login using <code class="language-plaintext highlighter-rouge">docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY</code>. Now, it’s time to do the cd part of CI/CD, deploying the website to Kubernetes. However, to get that part done properly, I’ll have to first get my new network running, so there will be no more stuff like this for a while.</p>
+
+<h2 id="part-3-automatic-deployment"><strong>Part 3: Automatic Deployment</strong></h2>
+
+<p>After first deciding to leave the Deployment aspect until I had Kubernetes running in my final environment, I decided to just hack together a small change that would make it possible to use this Pipeline for “Production” already: copy the changed files to the current webserver via ssh.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">deploy-lxc</span><span class="pi">:</span>
+    <span class="na">stage</span><span class="pi">:</span> <span class="s">deploy</span>
+    <span class="na">tags</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">docker-builder</span>
+    <span class="na">dependencies</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">jekyll-build</span>
+    <span class="na">script</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">scp -r src/_site/* root@jmb-web-01:/var/www/html/</span>
+
+</code></pre></div></div>
+
+<p>And done! Now I can just write a blog post, commit &amp; push to gitlab and it automatically ends up on my blog.</p>
+
+  </div><a class="u-url" href="/blog/2021/08/27/gitlab-cicd-1.html" hidden></a>
 </article>
 
       </div>

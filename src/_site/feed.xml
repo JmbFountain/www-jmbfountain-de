@@ -1,45 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-08-26T18:12:50+02:00</updated><id>/feed.xml</id><title type="html">JmbFountain</title><subtitle>Website of Johannes, here I write about all sorts of stuff I usually do, along with random other stuff
-</subtitle><author><name>Johannes</name><email>jmb@smx.de</email></author><entry><title type="html">Setting up Gitlab CI/CD pt. 2</title><link href="/blog/2021/08/26/18-03.html" rel="alternate" type="text/html" title="Setting up Gitlab CI/CD pt. 2" /><published>2021-08-26T00:00:00+02:00</published><updated>2021-08-26T00:00:00+02:00</updated><id>/blog/2021/08/26/18-03</id><content type="html" xml:base="/blog/2021/08/26/18-03.html">&lt;p&gt;In the last post, I left off with a half finished pipeline. Now, I finally got it working.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-08-31T13:19:27+02:00</updated><id>/feed.xml</id><title type="html">JmbFountain</title><subtitle>Website of Johannes, here I write about all sorts of stuff I usually do, along with random other stuff
+</subtitle><author><name>Johannes</name><email>jmb@smx.de</email></author><entry><title type="html">Figlet - easily create ascii art</title><link href="/blog/2021/08/31/figlet.html" rel="alternate" type="text/html" title="Figlet - easily create ascii art" /><published>2021-08-31T00:00:00+02:00</published><updated>2021-08-31T00:00:00+02:00</updated><id>/blog/2021/08/31/figlet</id><content type="html" xml:base="/blog/2021/08/31/figlet.html">&lt;p&gt;A small tool I have used for a few years for many purposes is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;figlet&lt;/code&gt;. You can use it to easily convert text into ASCII-Art of text.&lt;/p&gt;
 
-&lt;p&gt;.gitlab-ci.yml:&lt;/p&gt;
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;stages&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;compile&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;container-build&lt;/span&gt;
+&lt;p&gt;The most basic usage looks like this:&lt;/p&gt;
 
-&lt;span class=&quot;na&quot;&gt;jekyll-build&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;compile&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;jekyll/builder&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;tags&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;cd src/&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;jekyll clean&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;jekyll build&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;artifacts&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
-            &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;src/_site/&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;webroot&quot;&lt;/span&gt;
+&lt;pre&gt;
+&lt;font color=&quot;#8AE234&quot;&gt;&lt;b&gt;johannes&lt;/b&gt;&lt;/font&gt;:&lt;font color=&quot;#729FCF&quot;&gt;&lt;b&gt;~&lt;/b&gt;&lt;/font&gt;$ figlet text
+ _            _   
+| |_ _____  _| |_ 
+| __/ _ \ \/ / __|
+| ||  __/&amp;gt;  &amp;lt;| |_ 
+ \__\___/_/\_\\__|
+&lt;/pre&gt;
 
-&lt;span class=&quot;na&quot;&gt;container-build&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;container-build&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;tags&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker-builder&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;dependencies&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;jekyll-build&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;before_script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;unset cd&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker info&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;echo &quot;$CI_DEPLOY_USER $CI_DEPLOY_PASSWORD $CI_REGISTRY&quot;&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker build -t $CI_REGISTRY/johannes/www-jmbfountain-de .&lt;/span&gt;
-        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker push $CI_REGISTRY/johannes/www-jmbfountain-de&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;So what did I do to fix this? Basically I read through the docs for login/auth for three hours and then figured out I should use a Deployment-Token called “gitlab-deploy-token”, and login using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY&lt;/code&gt;. Now, it’s time to do the cd part of CI/CD, deploying the website to Kubernetes. However, to get that part done properly, I’ll have to first get my new network running, so there will be no more stuff like this for a while.&lt;/p&gt;</content><author><name>[&quot;Johannes&quot;]</name></author><category term="blog" /><summary type="html">In the last post, I left off with a half finished pipeline. Now, I finally got it working.</summary></entry><entry><title type="html">Setting up Gitlab CI/CD pt. 1</title><link href="/blog/2021/08/26/gitlab-cicd-1.html" rel="alternate" type="text/html" title="Setting up Gitlab CI/CD pt. 1" /><published>2021-08-26T00:00:00+02:00</published><updated>2021-08-26T00:00:00+02:00</updated><id>/blog/2021/08/26/gitlab-cicd-1</id><content type="html" xml:base="/blog/2021/08/26/gitlab-cicd-1.html">&lt;p&gt;My next step of optimizing my homelab (I am lazy, after all) was in building a functional ci/cd environment. Foolish as I am, I decided to start with my website.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Links:
+Font library: [https://www.figlet.org/fontdb.cgi]&lt;/p&gt;</content><author><name>Johannes</name></author><category term="blog" /><summary type="html">A small tool I have used for a few years for many purposes is figlet. You can use it to easily convert text into ASCII-Art of text.</summary></entry><entry><title type="html">Setting up Gitlab CI/CD</title><link href="/blog/2021/08/27/gitlab-cicd-1.html" rel="alternate" type="text/html" title="Setting up Gitlab CI/CD" /><published>2021-08-27T00:00:00+02:00</published><updated>2021-08-27T00:00:00+02:00</updated><id>/blog/2021/08/27/gitlab-cicd-1</id><content type="html" xml:base="/blog/2021/08/27/gitlab-cicd-1.html">&lt;p&gt;My next step of optimizing my homelab (I am lazy, after all) was in building a functional ci/cd environment. Foolish as I am, I decided to start with my website.&lt;/p&gt;
 
 &lt;p&gt;My current Website is statically generated using Jekyll. As a Theme I just stuck with Minima after doing a few modifications, namely reducing the content padding on the sides (I really dislike the huge white bars of nothing, my guess is they developed after people saw 16:9 screens and thought “look, how many more ads we can put on this”).&lt;/p&gt;
+
+&lt;h2 id=&quot;part-1-getting-started&quot;&gt;&lt;strong&gt;Part 1: Getting started&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;h2 id=&quot;first-experiments&quot;&gt;First experiments&lt;/h2&gt;
 &lt;p&gt;So, foolishly, I decided to use it as an apparently easy first start. My goal was to get a container out of it that I could just deploy to k3s.For me, the logical steps would be the following:&lt;/p&gt;
@@ -89,7 +68,7 @@ Fixed it, and:&lt;/p&gt;
 &lt;h2 id=&quot;changing-tactic&quot;&gt;Changing tactic&lt;/h2&gt;
 &lt;p&gt;I decided that to best circumvent this docker-in-docker thing I’d just register another runner on the same container that uses shell as an executor, which would then just execute a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker build&lt;/code&gt;-command. This somehow gives me an even less useful error (“ERROR: Job failed: exit status 1”)&lt;/p&gt;
 
-&lt;p&gt;At the end of this first part, my .gitlab-ci.yml looks like this:&lt;/p&gt;
+&lt;p&gt;At the end of this stage, my .gitlab-ci.yml looks like this:&lt;/p&gt;
 
 &lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;stages&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;compile&lt;/span&gt;
@@ -125,7 +104,65 @@ Fixed it, and:&lt;/p&gt;
         &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker push gitlab.vj.home:5050/johannes/www-jmbfountain-de:latest&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;(The token is hard-coded in this iteration, after I get it working I can still delete it, and replace it with a safer alternative)&lt;/em&gt;&lt;/p&gt;</content><author><name>[&quot;Johannes&quot;]</name></author><category term="blog" /><summary type="html">My next step of optimizing my homelab (I am lazy, after all) was in building a functional ci/cd environment. Foolish as I am, I decided to start with my website.</summary></entry><entry><title type="html">K3s custom installation</title><link href="/blog/2021/08/19/k3s-configs.html" rel="alternate" type="text/html" title="K3s custom installation" /><published>2021-08-19T00:00:00+02:00</published><updated>2021-08-19T00:00:00+02:00</updated><id>/blog/2021/08/19/k3s-configs</id><content type="html" xml:base="/blog/2021/08/19/k3s-configs.html">&lt;p&gt;So I recently started learning Kubernetes stuff, for various reasons.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;(The token is hard-coded in this iteration, after I get it working I can still delete it, and replace it with a safer alternative)&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;part-2-working-ci&quot;&gt;&lt;strong&gt;Part 2: Working CI&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;(this was originally a second post, but I decided to merge it for readability)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;.gitlab-ci.yml:&lt;/p&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;stages&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;compile&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;container-build&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;jekyll-build&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;compile&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;jekyll/builder&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;tags&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;cd src/&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;jekyll clean&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;jekyll build&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;artifacts&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
+            &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;src/_site/&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;webroot&quot;&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;container-build&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;container-build&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;tags&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker-builder&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;dependencies&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;jekyll-build&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;before_script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;unset cd&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker info&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;echo &quot;$CI_DEPLOY_USER $CI_DEPLOY_PASSWORD $CI_REGISTRY&quot;&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker build -t $CI_REGISTRY/johannes/www-jmbfountain-de .&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker push $CI_REGISTRY/johannes/www-jmbfountain-de&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;So what did I do to fix this? Basically I read through the docs for login/auth for three hours and then figured out I should use a Deployment-Token called “gitlab-deploy-token”, and login using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY&lt;/code&gt;. Now, it’s time to do the cd part of CI/CD, deploying the website to Kubernetes. However, to get that part done properly, I’ll have to first get my new network running, so there will be no more stuff like this for a while.&lt;/p&gt;
+
+&lt;h2 id=&quot;part-3-automatic-deployment&quot;&gt;&lt;strong&gt;Part 3: Automatic Deployment&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;After first deciding to leave the Deployment aspect until I had Kubernetes running in my final environment, I decided to just hack together a small change that would make it possible to use this Pipeline for “Production” already: copy the changed files to the current webserver via ssh.&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;deploy-lxc&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;deploy&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;tags&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;docker-builder&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;dependencies&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;jekyll-build&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;scp -r src/_site/* root@jmb-web-01:/var/www/html/&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And done! Now I can just write a blog post, commit &amp;amp; push to gitlab and it automatically ends up on my blog.&lt;/p&gt;</content><author><name>[&quot;Johannes&quot;]</name></author><category term="blog" /><summary type="html">My next step of optimizing my homelab (I am lazy, after all) was in building a functional ci/cd environment. Foolish as I am, I decided to start with my website.</summary></entry><entry><title type="html">K3s custom installation</title><link href="/blog/2021/08/19/k3s-configs.html" rel="alternate" type="text/html" title="K3s custom installation" /><published>2021-08-19T00:00:00+02:00</published><updated>2021-08-19T00:00:00+02:00</updated><id>/blog/2021/08/19/k3s-configs</id><content type="html" xml:base="/blog/2021/08/19/k3s-configs.html">&lt;p&gt;So I recently started learning Kubernetes stuff, for various reasons.&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Game server deployment&lt;/li&gt;
   &lt;li&gt;Learning new stuff&lt;/li&gt;
@@ -148,169 +185,4 @@ Now, you might ask, why change this? For me, the most annoying part is that I ha
 
 &lt;p&gt;My progress can be tracked on Github:
 &lt;a href=&quot;https://github.com/JmbFountain/k3s-setup&quot;&gt;https://github.com/JmbFountain/k3s-setup&lt;/a&gt;
-Feel Free to open issues, send pull requests or E-Mails with suggestions for Improvements!&lt;/p&gt;</content><author><name>[&quot;Johannes&quot;]</name></author><category term="blog" /><summary type="html">So I recently started learning Kubernetes stuff, for various reasons. Game server deployment Learning new stuff It should be fun? Maybe? Hopefully?</summary></entry><entry><title type="html">This post demonstrates post content styles</title><link href="/junk/2016/05/20/this-post-demonstrates-post-content-styles.html" rel="alternate" type="text/html" title="This post demonstrates post content styles" /><published>2016-05-20T00:00:00+02:00</published><updated>2016-05-20T00:00:00+02:00</updated><id>/junk/2016/05/20/this-post-demonstrates-post-content-styles</id><content type="html" xml:base="/junk/2016/05/20/this-post-demonstrates-post-content-styles.html">&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt. Vestibulum lacus tortor, ultricies id dignissim ac, bibendum in velit.&lt;/p&gt;
-
-&lt;h2 id=&quot;some-great-heading-h2&quot;&gt;Some great heading (h2)&lt;/h2&gt;
-
-&lt;p&gt;Proin convallis mi ac felis pharetra aliquam. Curabitur dignissim accumsan rutrum. In arcu magna, aliquet vel pretium et, molestie et arcu.&lt;/p&gt;
-
-&lt;p&gt;Mauris lobortis nulla et felis ullamcorper bibendum. Phasellus et hendrerit mauris. Proin eget nibh a massa vestibulum pretium. Suspendisse eu nisl a ante aliquet bibendum quis a nunc. Praesent varius interdum vehicula. Aenean risus libero, placerat at vestibulum eget, ultricies eu enim. Praesent nulla tortor, malesuada adipiscing adipiscing sollicitudin, adipiscing eget est.&lt;/p&gt;
-
-&lt;h2 id=&quot;another-great-heading-h2&quot;&gt;Another great heading (h2)&lt;/h2&gt;
-
-&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt. Vestibulum lacus tortor, ultricies id dignissim ac, bibendum in velit.&lt;/p&gt;
-
-&lt;h3 id=&quot;some-great-subheading-h3&quot;&gt;Some great subheading (h3)&lt;/h3&gt;
-
-&lt;p&gt;Proin convallis mi ac felis pharetra aliquam. Curabitur dignissim accumsan rutrum. In arcu magna, aliquet vel pretium et, molestie et arcu. Mauris lobortis nulla et felis ullamcorper bibendum.&lt;/p&gt;
-
-&lt;p&gt;Phasellus et hendrerit mauris. Proin eget nibh a massa vestibulum pretium. Suspendisse eu nisl a ante aliquet bibendum quis a nunc.&lt;/p&gt;
-
-&lt;h3 id=&quot;some-great-subheading-h3-1&quot;&gt;Some great subheading (h3)&lt;/h3&gt;
-
-&lt;p&gt;Praesent varius interdum vehicula. Aenean risus libero, placerat at vestibulum eget, ultricies eu enim. Praesent nulla tortor, malesuada adipiscing adipiscing sollicitudin, adipiscing eget est.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;This quote will &lt;em&gt;change&lt;/em&gt; your life. It will reveal the &lt;i&gt;secrets&lt;/i&gt; of the universe, and all the wonders of humanity. Don’t &lt;em&gt;misuse&lt;/em&gt; it.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt.&lt;/p&gt;
-
-&lt;h3 id=&quot;some-great-subheading-h3-2&quot;&gt;Some great subheading (h3)&lt;/h3&gt;
-
-&lt;p&gt;Vestibulum lacus tortor, ultricies id dignissim ac, bibendum in velit. Proin convallis mi ac felis pharetra aliquam. Curabitur dignissim accumsan rutrum.&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;Hello, World!&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;In arcu magna, aliquet vel pretium et, molestie et arcu. Mauris lobortis nulla et felis ullamcorper bibendum. Phasellus et hendrerit mauris.&lt;/p&gt;
-
-&lt;h4 id=&quot;you-might-want-a-sub-subheading-h4&quot;&gt;You might want a sub-subheading (h4)&lt;/h4&gt;
-
-&lt;p&gt;In arcu magna, aliquet vel pretium et, molestie et arcu. Mauris lobortis nulla et felis ullamcorper bibendum. Phasellus et hendrerit mauris.&lt;/p&gt;
-
-&lt;p&gt;In arcu magna, aliquet vel pretium et, molestie et arcu. Mauris lobortis nulla et felis ullamcorper bibendum. Phasellus et hendrerit mauris.&lt;/p&gt;
-
-&lt;h4 id=&quot;but-its-probably-overkill-h4&quot;&gt;But it’s probably overkill (h4)&lt;/h4&gt;
-
-&lt;p&gt;In arcu magna, aliquet vel pretium et, molestie et arcu. Mauris lobortis nulla et felis ullamcorper bibendum. Phasellus et hendrerit mauris.&lt;/p&gt;
-
-&lt;h5 id=&quot;could-be-a-smaller-sub-heading-pacman-h5&quot;&gt;Could be a smaller sub-heading, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pacman&lt;/code&gt; (h5)&lt;/h5&gt;
-
-&lt;p&gt;In arcu magna, aliquet vel pretium et, molestie et arcu. Mauris lobortis nulla et felis ullamcorper bibendum. Phasellus et hendrerit mauris.&lt;/p&gt;
-
-&lt;h6 id=&quot;small-yet-significant-sub-heading--h6&quot;&gt;Small yet significant sub-heading  (h6)&lt;/h6&gt;
-
-&lt;p&gt;In arcu magna, aliquet vel pretium et, molestie et arcu. Mauris lobortis nulla et felis ullamcorper bibendum. Phasellus et hendrerit mauris.&lt;/p&gt;
-
-&lt;h3 id=&quot;oh-hai-an-unordered-list&quot;&gt;Oh hai, an unordered list!!&lt;/h3&gt;
-
-&lt;p&gt;In arcu magna, aliquet vel pretium et, molestie et arcu. Mauris lobortis nulla et felis ullamcorper bibendum. Phasellus et hendrerit mauris.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;First item, yo&lt;/li&gt;
-  &lt;li&gt;Second item, dawg&lt;/li&gt;
-  &lt;li&gt;Third item, what what?!&lt;/li&gt;
-  &lt;li&gt;Fourth item, fo sheezy my neezy&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;oh-hai-an-ordered-list&quot;&gt;Oh hai, an ordered list!!&lt;/h3&gt;
-
-&lt;p&gt;In arcu magna, aliquet vel pretium et, molestie et arcu. Mauris lobortis nulla et felis ullamcorper bibendum. Phasellus et hendrerit mauris.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;First item, yo&lt;/li&gt;
-  &lt;li&gt;Second item, dawg&lt;/li&gt;
-  &lt;li&gt;Third item, what what?!&lt;/li&gt;
-  &lt;li&gt;Fourth item, fo sheezy my neezy&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;headings-are-cool-h2&quot;&gt;Headings are cool! (h2)&lt;/h2&gt;
-
-&lt;p&gt;Proin eget nibh a massa vestibulum pretium. Suspendisse eu nisl a ante aliquet bibendum quis a nunc. Praesent varius interdum vehicula. Aenean risus libero, placerat at vestibulum eget, ultricies eu enim. Praesent nulla tortor, malesuada adipiscing adipiscing sollicitudin, adipiscing eget est.&lt;/p&gt;
-
-&lt;p&gt;Praesent nulla tortor, malesuada adipiscing adipiscing sollicitudin, adipiscing eget est.&lt;/p&gt;
-
-&lt;p&gt;Proin eget nibh a massa vestibulum pretium. Suspendisse eu nisl a ante aliquet bibendum quis a nunc.&lt;/p&gt;
-
-&lt;h3 id=&quot;tables&quot;&gt;Tables&lt;/h3&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Title 1&lt;/th&gt;
-      &lt;th&gt;Title 2&lt;/th&gt;
-      &lt;th&gt;Title 3&lt;/th&gt;
-      &lt;th&gt;Title 4&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;lorem&lt;/td&gt;
-      &lt;td&gt;lorem ipsum&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor sit&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;lorem ipsum dolor sit&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor sit&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor sit&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor sit&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;lorem ipsum dolor sit&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor sit&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor sit&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor sit&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;lorem ipsum dolor sit&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor sit&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor sit&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor sit&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Title 1&lt;/th&gt;
-      &lt;th&gt;Title 2&lt;/th&gt;
-      &lt;th&gt;Title 3&lt;/th&gt;
-      &lt;th&gt;Title 4&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;lorem&lt;/td&gt;
-      &lt;td&gt;lorem ipsum&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor sit&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;lorem ipsum dolor sit amet&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor sit amet consectetur&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor sit amet&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor sit&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;lorem ipsum dolor&lt;/td&gt;
-      &lt;td&gt;lorem ipsum&lt;/td&gt;
-      &lt;td&gt;lorem&lt;/td&gt;
-      &lt;td&gt;lorem ipsum&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;lorem ipsum dolor&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor sit&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor sit amet&lt;/td&gt;
-      &lt;td&gt;lorem ipsum dolor sit amet consectetur&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;</content><author><name>[&quot;Bart Simpson&quot;, &quot;Nelson Mandela Muntz&quot;]</name></author><category term="junk" /><summary type="html">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce bibendum neque eget nunc mattis eu sollicitudin enim tincidunt. Vestibulum lacus tortor, ultricies id dignissim ac, bibendum in velit.</summary></entry></feed>
+Feel Free to open issues, send pull requests or E-Mails with suggestions for Improvements!&lt;/p&gt;</content><author><name>[&quot;Johannes&quot;]</name></author><category term="blog" /><summary type="html">So I recently started learning Kubernetes stuff, for various reasons. Game server deployment Learning new stuff It should be fun? Maybe? Hopefully?</summary></entry></feed>
