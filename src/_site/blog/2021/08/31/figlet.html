@@ -3,9 +3,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>Figlet - easily create ascii art | JmbFountain</title>
+<title>Figlet/Toilet - easily create ascii art from text | JmbFountain</title>
 <meta name="generator" content="Jekyll v4.2.0" />
-<meta property="og:title" content="Figlet - easily create ascii art" />
+<meta property="og:title" content="Figlet/Toilet - easily create ascii art from text" />
 <meta name="author" content="Johannes" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="A small tool I have used for a few years for many purposes is figlet. You can use it to easily convert text into ASCII-Art of text." />
@@ -14,9 +14,9 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-08-31T00:00:00+02:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Figlet - easily create ascii art" />
+<meta property="twitter:title" content="Figlet/Toilet - easily create ascii art from text" />
 <script type="application/ld+json">
-{"description":"A small tool I have used for a few years for many purposes is figlet. You can use it to easily convert text into ASCII-Art of text.","@type":"BlogPosting","headline":"Figlet - easily create ascii art","dateModified":"2021-08-31T00:00:00+02:00","datePublished":"2021-08-31T00:00:00+02:00","author":{"@type":"Person","name":"Johannes"},"url":"/blog/2021/08/31/figlet.html","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2021/08/31/figlet.html"},"@context":"https://schema.org"}</script>
+{"description":"A small tool I have used for a few years for many purposes is figlet. You can use it to easily convert text into ASCII-Art of text.","@type":"BlogPosting","headline":"Figlet/Toilet - easily create ascii art from text","dateModified":"2021-08-31T00:00:00+02:00","datePublished":"2021-08-31T00:00:00+02:00","author":{"@type":"Person","name":"Johannes"},"url":"/blog/2021/08/31/figlet.html","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2021/08/31/figlet.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="JmbFountain" />
 </head>
@@ -40,7 +40,7 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Figlet - easily create ascii art</h1>
+    <h1 class="post-title p-name" itemprop="name headline">Figlet/Toilet - easily create ascii art from text</h1>
     <p class="post-meta"><time class="dt-published" datetime="2021-08-31T00:00:00+02:00" itemprop="datePublished">
         2021-08-31-00-00
       </time>• 
@@ -62,9 +62,67 @@
  \__\___/_/\_\\__|
 </pre>
 
+<p>This can already be used to spruce up login banners or Email signatures.</p>
+
+<p>take my current, usual login banner (In this case when logging into my first k3s VM):</p>
+
+<pre>
+<font color="#8AE234"><b>johannes</b></font>:<font color="#729FCF"><b>~</b></font>$ ssh root@k3s-node-01
+Linux k3s-node-01 4.19.0-17-amd64 #1 SMP Debian 4.19.194-3 (2021-07-18) x86_64
+Logged in as <font color="#4E9A06">root</font>@<font color="#8AE234">k3s-node-01</font>, up 3 weeks, 53 minutes 
+<font color="#EF2929"><b>Debian 10 buster</b></font>, Linux 4.19.0-17-amd64
+1 Sockets x 4 Cores x 1 Threads (<font color="#EF2929"><b>4 total</b></font>)  Common KVM processor
+<font color="#3465A4">1.2Gi </font>of <font color="#EF2929">3.9Gi</font> RAM used
+--------------------------------------------------------------------------------
+Currently logged in:
+ 
+--------------------------------------------------------------------------------
+Date:<font color="#D3D7CF">Tue Aug 31 14:15:46 CEST 2021</font>
+</pre>
+
+<p>We could now, for example, replace the part that shows the currently logged in users with ASCII-Art of the machines’ purpose/application, Kubernetes. Because this VM has a very small installation, it doesn’t have figlet installed by itself, so for this article I’ll add it. On Debian FIGlet and its colourful brother, TOIlet are available in the standard repositories.</p>
+
+<p>if I add the line <code class="language-plaintext highlighter-rouge">figlet Kubernetes</code> to the Bash script, it now outputs</p>
+<pre>
+<font color="#3465A4">1.2Gi </font>of <font color="#EF2929">3.9Gi</font> RAM used
+ _  ___   _ ____  _____ ____  _   _ _____ _____ _____ ____  
+| |/ / | | | __ )| ____|  _ \| \ | | ____|_   _| ____/ ___| 
+| &apos; /| | | |  _ \|  _| | |_) |  \| |  _|   | | |  _| \___ \ 
+| . \| |_| | |_) | |___|  _ &lt;| |\  | |___  | | | |___ ___) |
+|_|\_\\___/|____/|_____|_| \_\_| \_|_____| |_| |_____|____/ 
+                                                            
+Date:<font color="#D3D7CF">Tue Aug 31 15:22:46 CEST 2021</font>
+</pre>
+
+<p>this is indeed fairly boring, but you could do much more interesting stuff with it. For example piping something like username@host into figlet:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="si">$(</span><span class="nb">whoami</span><span class="si">)</span>@<span class="si">$(</span><span class="nb">hostname</span><span class="si">)</span> | figlet
+</code></pre></div></div>
+<p>returns on my local machine:</p>
+
+<pre>   _       _                                   ____        _       
+  (_) ___ | |__   __ _ _ __  _ __   ___  ___  / __ \ _   _| | __ _ 
+  | |/ _ \| &apos;_ \ / _` | &apos;_ \| &apos;_ \ / _ \/ __|/ / _` | | | | |/ _` |
+  | | (_) | | | | (_| | | | | | | |  __/\__ \ | (_| | |_| | | (_| |
+ _/ |\___/|_| |_|\__,_|_| |_|_| |_|\___||___/\ \__,_|\__, |_|\__,_|
+|__/                                          \____/ |___/       </pre>
+
+<p>However, one use I do recommend using this for is for announcements, especially of reboots. people tend to just ignore whatever is written into any login banner, even if it’s fat bold text, unless it’s really, really big and colourful.</p>
+
+<pre><font color="#8AE234"><b>johannes</b></font>:<font color="#729FCF"><b>~</b></font>$ echo &quot;Reboot in 5 min&quot; | toilet -F gay:border -f standard
+┌───────────────────────────────────────────────────────────────────────┐
+│ <font color="#AD7FA8"><b>_</b></font><font color="#EF2929"><b>__</b></font><font color="#FCE94F"><b>_</b></font>      <font color="#729FCF"><b>_</b></font>                 <font color="#FCE94F"><b>_</b></font>     <font color="#729FCF"><b>_</b></font>         <font color="#34E2E2"><b>_</b></font><font color="#729FCF"><b>__</b></font><font color="#AD7FA8"><b>_</b></font>              <font color="#EF2929"><b>_</b></font>       │
+│<font color="#EF2929"><b>|</b></font>  <font color="#FCE94F"><b>_</b></font> <font color="#8AE234"><b>\</b></font> <font color="#34E2E2"><b>_</b></font><font color="#729FCF"><b>__</b></font><font color="#AD7FA8"><b>|</b></font> <font color="#EF2929"><b>|_</b></font><font color="#FCE94F"><b>_</b></font>   <font color="#34E2E2"><b>__</b></font><font color="#729FCF"><b>_</b></font>   <font color="#EF2929"><b>__</b></font><font color="#FCE94F"><b>_</b></font> <font color="#8AE234"><b>|</b></font> <font color="#34E2E2"><b>|_</b></font>  <font color="#AD7FA8"><b>(_</b></font><font color="#EF2929"><b>)_</b></font> <font color="#FCE94F"><b>_</b></font><font color="#8AE234"><b>_</b></font>   <font color="#729FCF"><b>|</b></font> <font color="#AD7FA8"><b>__</b></font><font color="#EF2929"><b>_|</b></font>   <font color="#8AE234"><b>_</b></font> <font color="#34E2E2"><b>_</b></font><font color="#729FCF"><b>_</b></font> <font color="#AD7FA8"><b>__</b></font><font color="#EF2929"><b>_</b></font> <font color="#FCE94F"><b>(_</b></font><font color="#8AE234"><b>)_</b></font> <font color="#34E2E2"><b>_</b></font><font color="#729FCF"><b>_</b></font>  │
+│<font color="#FCE94F"><b>|</b></font> <font color="#8AE234"><b>|_</b></font><font color="#34E2E2"><b>)</b></font> <font color="#729FCF"><b>/</b></font> <font color="#AD7FA8"><b>_</b></font> <font color="#EF2929"><b>\</b></font> <font color="#FCE94F"><b>&apos;_</b></font> <font color="#8AE234"><b>\</b></font> <font color="#34E2E2"><b>/</b></font> <font color="#729FCF"><b>_</b></font> <font color="#AD7FA8"><b>\</b></font> <font color="#EF2929"><b>/</b></font> <font color="#FCE94F"><b>_</b></font> <font color="#8AE234"><b>\</b></font><font color="#34E2E2"><b>|</b></font> <font color="#729FCF"><b>__</b></font><font color="#AD7FA8"><b>|</b></font> <font color="#EF2929"><b>|</b></font> <font color="#FCE94F"><b>|</b></font> <font color="#8AE234"><b>&apos;_</b></font> <font color="#34E2E2"><b>\</b></font>  <font color="#AD7FA8"><b>|_</b></font><font color="#EF2929"><b>__</b></font> <font color="#FCE94F"><b>\</b></font>  <font color="#34E2E2"><b>|</b></font> <font color="#729FCF"><b>&apos;_</b></font> <font color="#AD7FA8"><b>`</b></font> <font color="#EF2929"><b>_</b></font> <font color="#FCE94F"><b>\</b></font><font color="#8AE234"><b>|</b></font> <font color="#34E2E2"><b>|</b></font> <font color="#729FCF"><b>&apos;_</b></font> <font color="#AD7FA8"><b>\</b></font> │
+│<font color="#8AE234"><b>|</b></font>  <font color="#34E2E2"><b>_</b></font> <font color="#729FCF"><b>&lt;</b></font>  <font color="#EF2929"><b>__</b></font><font color="#FCE94F"><b>/</b></font> <font color="#8AE234"><b>|_</b></font><font color="#34E2E2"><b>)</b></font> <font color="#729FCF"><b>|</b></font> <font color="#AD7FA8"><b>(_</b></font><font color="#EF2929"><b>)</b></font> <font color="#FCE94F"><b>|</b></font> <font color="#8AE234"><b>(_</b></font><font color="#34E2E2"><b>)</b></font> <font color="#729FCF"><b>|</b></font> <font color="#AD7FA8"><b>|_</b></font>  <font color="#FCE94F"><b>|</b></font> <font color="#8AE234"><b>|</b></font> <font color="#34E2E2"><b>|</b></font> <font color="#729FCF"><b>|</b></font> <font color="#AD7FA8"><b>|</b></font>  <font color="#EF2929"><b>_</b></font><font color="#FCE94F"><b>__</b></font><font color="#8AE234"><b>)</b></font> <font color="#34E2E2"><b>|</b></font> <font color="#729FCF"><b>|</b></font> <font color="#AD7FA8"><b>|</b></font> <font color="#EF2929"><b>|</b></font> <font color="#FCE94F"><b>|</b></font> <font color="#8AE234"><b>|</b></font> <font color="#34E2E2"><b>|</b></font> <font color="#729FCF"><b>|</b></font> <font color="#AD7FA8"><b>|</b></font> <font color="#EF2929"><b>|</b></font> <font color="#FCE94F"><b>|</b></font>│
+│<font color="#34E2E2"><b>|_</b></font><font color="#729FCF"><b>|</b></font> <font color="#AD7FA8"><b>\_</b></font><font color="#EF2929"><b>\_</b></font><font color="#FCE94F"><b>__</b></font><font color="#8AE234"><b>|_</b></font><font color="#34E2E2"><b>._</b></font><font color="#729FCF"><b>_/</b></font> <font color="#AD7FA8"><b>\</b></font><font color="#EF2929"><b>__</b></font><font color="#FCE94F"><b>_/</b></font> <font color="#8AE234"><b>\</b></font><font color="#34E2E2"><b>__</b></font><font color="#729FCF"><b>_/</b></font> <font color="#AD7FA8"><b>\</b></font><font color="#EF2929"><b>__</b></font><font color="#FCE94F"><b>|</b></font> <font color="#8AE234"><b>|_</b></font><font color="#34E2E2"><b>|_</b></font><font color="#729FCF"><b>|</b></font> <font color="#AD7FA8"><b>|_</b></font><font color="#EF2929"><b>|</b></font> <font color="#FCE94F"><b>|_</b></font><font color="#8AE234"><b>__</b></font><font color="#34E2E2"><b>_/</b></font>  <font color="#AD7FA8"><b>|_</b></font><font color="#EF2929"><b>|</b></font> <font color="#FCE94F"><b>|_</b></font><font color="#8AE234"><b>|</b></font> <font color="#34E2E2"><b>|_</b></font><font color="#729FCF"><b>|_</b></font><font color="#AD7FA8"><b>|_</b></font><font color="#EF2929"><b>|</b></font> <font color="#FCE94F"><b>|_</b></font><font color="#8AE234"><b>|</b></font>│
+│                                                                       │
+└───────────────────────────────────────────────────────────────────────┘
+<font color="#8AE234"><b>johannes</b></font>:<font color="#729FCF"><b>~</b></font>$ echo &quot;Reboot in 5 min&quot; | toilet -F gay:border -f standard | wall</pre>
+
 <hr />
 <p>Links:
-Font library: [https://www.figlet.org/fontdb.cgi]</p>
+Font library: [https://www.figlet.org/fontdb.cgi]
+My motd: [https://raw.githubusercontent.com/JmbFountain/srvcfg/master/motd]</p>
 
   </div><a class="u-url" href="/blog/2021/08/31/figlet.html" hidden></a>
 </article>
